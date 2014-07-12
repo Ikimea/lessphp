@@ -4,16 +4,8 @@ require_once __DIR__ . "/../lessc.inc.php";
 
 // Runs all the tests in inputs/ and compares their output to ouputs/
 
-function _dump($value) {
-	fwrite(STDOUT, print_r($value, true));
-}
-
-function _quote($str) {
-	return preg_quote($str, "/");
-}
-
-class InputTest extends PHPUnit_Framework_TestCase {
-	protected static $importDirs = array("inputs/test-imports");
+class InputTest extends PHPUnit_Framework_TestCase{
+	protected static $importDirs = array("Resources/inputs/test-imports");
 
 	protected static $testDirs = array(
 		"inputs" => "outputs",
@@ -62,18 +54,18 @@ class InputTest extends PHPUnit_Framework_TestCase {
 	static public function findInputNames($pattern="*.less") {
 		$files = array();
 		foreach (self::$testDirs as $inputDir => $outputDir) {
-			$files = array_merge($files, glob(__DIR__ . "/" . $inputDir . "/" . $pattern));
+			$files = array_merge($files, glob(__DIR__ . "/Resources/" . $inputDir . "/" . $pattern));
 		}
 
 		return array_filter($files, "is_file");
 	}
 
 	static public function outputNameFor($input) {
-		$front = _quote(__DIR__ . "/");
+		$front = self::_quote(__DIR__ . "/");
 		$out = preg_replace("/^$front/", "", $input);
 
 		foreach (self::$testDirs as $inputDir => $outputDir) {
-			$in = _quote($inputDir . "/");
+			$in = self::_quote($inputDir . "/");
 			$rewritten = preg_replace("/$in/", $outputDir . "/", $out);
 			if ($rewritten != $out) {
 				$out = $rewritten;
@@ -85,5 +77,13 @@ class InputTest extends PHPUnit_Framework_TestCase {
 
 		return __DIR__ . "/" . $out;
 	}
+
+    protected static function _dump($value) {
+        fwrite(STDOUT, print_r($value, true));
+    }
+
+    protected static function _quote($str) {
+        return preg_quote($str, "/");
+    }
 }
 

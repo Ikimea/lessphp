@@ -5,7 +5,7 @@ require_once __DIR__ . "/../lessc.inc.php";
 class ApiTest extends PHPUnit_Framework_TestCase {
 	public function setUp() {
 		$this->less = new lessc();
-		$this->less->importDir = array(__DIR__ . "/inputs/test-imports");
+		$this->less->importDir = array(__DIR__ . "/Resources/inputs/test-imports");
 	}
 
 	public function testPreserveComments() {
@@ -88,7 +88,7 @@ EOD;
 	}
 
 	public function testOldInterface() {
-		$this->less = new lessc(__DIR__ . "/inputs/hi.less");
+		$this->less = new lessc(__DIR__ . "/Resources/inputs/hi.less");
 		$out = $this->less->parse(array("hello" => "10px"));
 		$this->assertEquals(trim($out), trim('
 div:before {
