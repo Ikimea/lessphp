@@ -11,7 +11,7 @@ before_script:
   - composer install --no-interaction --prefer-source --dev
 
 script:
-  - phpunit tests
+  - bin/phpunit tests
 
 matrix:
   fast_finish: true

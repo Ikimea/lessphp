@@ -1,5 +1,5 @@
 {
-    "name": "leafo/lessphp",
+    "name": "ikimea/lessphp",
     "type": "library",
     "description": "lessphp is a compiler for LESS written in PHP.",
     "homepage": "http://leafo.net/lessphp/",
@@ -14,8 +14,19 @@
             "homepage": "http://leafo.net"
         }
     ],
+
+    "require-dev": {
+        "phpunit/phpunit": "4.1.2"
+    },
     "autoload": {
         "classmap": ["lessc.inc.php"]
+    },
+    "bin": [
+        "bin/plessc",
+        "bin/lessify"
+    ],
+    "config": {
+        "bin-dir": "bin"
     },
     "extra": {
         "branch-alias": {
