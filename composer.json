@@ -2,24 +2,29 @@
     "name": "ikimea/lessphp",
     "type": "library",
     "description": "lessphp is a compiler for LESS written in PHP.",
-    "homepage": "http://leafo.net/lessphp/",
-    "license": [
-      "MIT",
-      "GPL-3.0"
-    ],
+    "homepage": "http://lessphp.ikimea.com",
+    "license": "MIT",
     "authors": [
         {
             "name": "Leaf Corcoran",
             "email": "leafot@gmail.com",
             "homepage": "http://leafo.net"
+        },
+        {
+            "name": "Ikimea",
+            "homepage": "http://ikimea.com"
         }
     ],
-
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/console": "~2.3"
+    },
     "require-dev": {
+        "ext-phar": "*",
         "phpunit/phpunit": "4.1.2"
     },
     "autoload": {
-        "classmap": ["lessc.inc.php"]
+        "psr-0": { "Lessphp" : "lib/" }
     },
     "bin": [
         "bin/plessc",

@@ -1,7 +1,7 @@
-#!/usr/bin/php
+#!/usr/bin/env php
 <?php
 
-if (php_sapi_name() != "cli") {
+if (PHP_SAPI !== 'cli') {
 	err($fa.$argv[0]." must be run in the command line.");
 	exit(1);
 }
@@ -11,10 +11,12 @@ if (!$fname = array_shift($argv)) {
 	exit("Usage: ".$exe." input-file\n");
 }
 
-require "lessify.inc.php";
+require __DIR__.'/../lib/bootstrap.php';
+
+use Lessphp\Lessify;
 
 try  {
-	$parser = new lessify($fname);
+	$parser = new Lessify($fname);
 	echo $parser->parse();
 } catch (exception $e) {
 	exit("Fatal error: ".$e->getMessage()."\n");

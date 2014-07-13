@@ -1,9 +1,13 @@
 <?php
-require_once __DIR__ . "/../lessc.inc.php";
 
-class ErrorHandlingTest extends PHPUnit_Framework_TestCase {
-	public function setUp() {
-		$this->less = new lessc();
+use Lessphp\Lessc;
+
+
+class ErrorHandlingTest extends PHPUnit_Framework_TestCase
+{
+	public function setUp()
+    {
+		$this->less = new Lessc();
 	}
 
 	public function compile() {
@@ -15,7 +19,8 @@ class ErrorHandlingTest extends PHPUnit_Framework_TestCase {
 	 * @expectedException        Exception
 	 * @expectedExceptionMessage .parametric-mixin is undefined
 	 */
-	public function testRequiredParametersMissing() {
+	public function testRequiredParametersMissing()
+    {
 		$this->compile(
 			'.parametric-mixin (@a, @b) { a: @a; b: @b; }',
 			'.selector { .parametric-mixin(12px); }'
@@ -26,7 +31,8 @@ class ErrorHandlingTest extends PHPUnit_Framework_TestCase {
 	 * @expectedException        Exception
 	 * @expectedExceptionMessage .parametric-mixin is undefined
 	 */
-	public function testTooManyParameters() {
+	public function testTooManyParameters()
+    {
 		$this->compile(
 			'.parametric-mixin (@a, @b) { a: @a; b: @b; }',
 			'.selector { .parametric-mixin(12px, 13px, 14px); }'
@@ -37,7 +43,8 @@ class ErrorHandlingTest extends PHPUnit_Framework_TestCase {
 	 * @expectedException        Exception
 	 * @expectedExceptionMessage unrecognised input
 	 */
-	public function testRequiredArgumentsMissing() {
+	public function testRequiredArgumentsMissing()
+    {
 		$this->compile('.selector { rule: e(); }');
 	}
 
@@ -45,7 +52,8 @@ class ErrorHandlingTest extends PHPUnit_Framework_TestCase {
 	 * @expectedException        Exception
 	 * @expectedExceptionMessage variable @missing is undefined
 	 */
-	public function testVariableMissing() {
+	public function testVariableMissing()
+    {
 		$this->compile('.selector { rule: @missing; }');
 	}
 
@@ -53,7 +61,8 @@ class ErrorHandlingTest extends PHPUnit_Framework_TestCase {
 	 * @expectedException        Exception
 	 * @expectedExceptionMessage .missing-mixin is undefined
 	 */
-	public function testMixinMissing() {
+	public function testMixinMissing()
+    {
 		$this->compile('.selector { .missing-mixin; }');
 	}
 
@@ -61,7 +70,8 @@ class ErrorHandlingTest extends PHPUnit_Framework_TestCase {
 	 * @expectedException        Exception
 	 * @expectedExceptionMessage .flipped is undefined
 	 */
-	public function testGuardUnmatchedValue() {
+	public function testGuardUnmatchedValue()
+    {
 		$this->compile(
 			'.flipped(@x) when (@x =< 10) { rule: value; }',
 			'.selector { .flipped(12); }'
@@ -72,7 +82,8 @@ class ErrorHandlingTest extends PHPUnit_Framework_TestCase {
 	 * @expectedException        Exception
 	 * @expectedExceptionMessage .colors-only is undefined
 	 */
-	public function testGuardUnmatchedType() {
+	public function testGuardUnmatchedType()
+    {
 		$this->compile(
 			'.colors-only(@x) when (iscolor(@x)) { rule: value; }',
 			'.selector { .colors-only("string value"); }'

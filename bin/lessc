@@ -1,0 +1,14 @@
+#!/usr/bin/env php
+<?php
+
+if (PHP_SAPI !== 'cli') {
+    echo 'Warning: Bowerphp should be invoked via the CLI version of PHP, not the '.PHP_SAPI.' SAPI'.PHP_EOL;
+}
+
+require __DIR__.'/../lib/bootstrap.php';
+
+use Lessphp\Console\Application;
+
+// run the command application
+$application = new Application();
+$application->run();

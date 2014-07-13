@@ -40,11 +40,12 @@ if (has("h", "help")) {
 }
 
 error_reporting(E_ALL);
-$path  = realpath(dirname(__FILE__)).'/';
 
-require $path."lessc.inc.php";
+require __DIR__.'/../lib/bootstrap.php';
 
-$VERSION = lessc::$VERSION;
+use Lessphp\Lessc;
+
+$VERSION = Lessc::VERSION;
 
 $fa = "Fatal Error: ";
 function err($msg) {
@@ -58,7 +59,7 @@ if (php_sapi_name() != "cli") {
 
 function make_less($fname = null) {
 	global $opts;
-	$l = new lessc($fname);
+	$l = new Lessc($fname);
 
 	if (has("f")) {
 		$format = $opts["f"];
@@ -246,5 +247,3 @@ try {
 	err($fa.$ex->getMessage());
 	exit(1);
 }
-
-?>

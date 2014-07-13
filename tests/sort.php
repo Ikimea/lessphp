@@ -1,7 +1,7 @@
 <?php
 error_reporting(E_ALL);
 
-require realpath(dirname(__FILE__)).'/../lessc.inc.php';
+use Lessphp\Lessc;
 
 // sorts the selectors in stylesheet in order to normalize it for comparison
 
@@ -11,7 +11,8 @@ if (!$fname = array_shift($argv)) {
 	$fname = "php://stdin";
 }
 
-class lesscNormalized extends lessc {
+class lesscNormalized extends Lessc
+{
 	public $numberPrecision = 3;
 
 	public function compileValue($value) {

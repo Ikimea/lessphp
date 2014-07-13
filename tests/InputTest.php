@@ -1,10 +1,12 @@
 <?php
 
-require_once __DIR__ . "/../lessc.inc.php";
-
 // Runs all the tests in inputs/ and compares their output to ouputs/
 
-class InputTest extends PHPUnit_Framework_TestCase{
+use Lessphp\Lessc;
+
+
+class InputTest extends PHPUnit_Framework_TestCase
+{
 	protected static $importDirs = array("Resources/inputs/test-imports");
 
 	protected static $testDirs = array(
@@ -13,7 +15,7 @@ class InputTest extends PHPUnit_Framework_TestCase{
 	);
 
 	public function setUp() {
-		$this->less = new lessc();
+		$this->less = new Lessc();
 		$this->less->importDir = array_map(function($path) {
 			return __DIR__ . "/" . $path;
 		}, self::$importDirs);
@@ -60,7 +62,8 @@ class InputTest extends PHPUnit_Framework_TestCase{
 		return array_filter($files, "is_file");
 	}
 
-	static public function outputNameFor($input) {
+	static public function outputNameFor($input)
+    {
 		$front = self::_quote(__DIR__ . "/");
 		$out = preg_replace("/^$front/", "", $input);
 
@@ -78,11 +81,13 @@ class InputTest extends PHPUnit_Framework_TestCase{
 		return __DIR__ . "/" . $out;
 	}
 
-    protected static function _dump($value) {
+    protected static function _dump($value)
+    {
         fwrite(STDOUT, print_r($value, true));
     }
 
-    protected static function _quote($str) {
+    protected static function _quote($str)
+    {
         return preg_quote($str, "/");
     }
 }
