@@ -1,6 +1,7 @@
 <?php
 
 namespace Lessphp;
+use Lessphp\Parser\TagParser;
 
 /**
  * create a less file from a css file by combining blocks where appropriate
@@ -31,7 +32,7 @@ class Lessify extends Lessc
 
             // skip those with more than 1
             if (count($block['__tags']) == 1) {
-                $p = new tagparse(end($block['__tags']));
+                $p = new TagParser(end($block['__tags']));
                 $path = $p->parse();
                 $root->addBlock($path, $block);
                 $order[] = array('compressed', $path, $block);
@@ -40,7 +41,7 @@ class Lessify extends Lessc
                 $common = null;
                 $paths = array();
                 foreach ($block['__tags'] as $rawtag) {
-                    $p = new tagparse($rawtag);
+                    $p = new TagParser($rawtag);
                     $paths[] = $path = $p->parse();
                     if (is_null($common)) $common = $path;
                     else {
@@ -77,7 +78,7 @@ class Lessify extends Lessc
         foreach ($order as $item) {
             list($type, $tags, $block) = $item;
             if ($type == 'compressed') {
-                $top = tagparse::compileTag(reset($tags));
+                $top = TagParser::compileTag(reset($tags));
                 if (isset($compressed[$top])) {
                     $compressed[$top]->compile($this);
                     unset($compressed[$top]);
@@ -122,7 +123,7 @@ class Lessify extends Lessc
     }
 
     // remove comments from $text
-// todo: make it work for all functions, not just url
+    // todo: make it work for all functions, not just url
     function removeComments($text) {
         $look = array(
             'url(', '//', '/*', '"', "'"
@@ -132,7 +133,7 @@ class Lessify extends Lessc
         $min = null;
         $done = false;
         while (true) {
-// find the next item
+            // find the next item
             foreach ($look as $token) {
                 $pos = strpos($text, $token);
                 if ($pos !== false) {
@@ -192,7 +193,7 @@ class Lessify extends Lessc
 
     /* environment functions */
 
-// push a new block on the stack, used for parsing
+    // push a new block on the stack, used for parsing
     function pushBlock($tags) {
         $b = new \stdclass;
         $b->parent = $this->env;
@@ -205,14 +206,14 @@ class Lessify extends Lessc
         return $b;
     }
 
-// push a block that doesn't multiply tags
+    // push a block that doesn't multiply tags
     function pushSpecialBlock($name) {
         $b = $this->pushBlock(array($name));
         $b->no_multiply = true;
         return $b;
     }
 
-// used for compiliation variable state
+    // used for compiliation variable state
     function pushEnv($block = NULL)
     {
         $e = new \stdclass;

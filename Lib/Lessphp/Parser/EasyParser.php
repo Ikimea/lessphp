@@ -43,7 +43,7 @@ class EasyParser
         if ($this->count >= strlen($this->buffer)) return false;
 
         // shortcut on single letter
-        if (!$eatWhitespace and strlen($what) == 1) {
+        if (!$eatWhitespace && strlen($what) == 1) {
             if ($this->buffer{$this->count} == $what) {
                 $this->count++;
 

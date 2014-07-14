@@ -32,8 +32,8 @@ class ParserCommand extends Command
         try  {
             $parser = new Lessify($name);
             $output->writeln( $parser->parse());
-        } catch (exception $e) {
-            exit("Fatal error: ".$e->getMessage()."\n");
+        } catch (\Exception $e) {
+            $output->writeln("<error>Fatal error: ".$e->getMessage()."</error>\n");
         }
     }
 }

@@ -123,7 +123,7 @@ class Lessc
             if (substr_compare($url, '.css', -4, 4) === 0) return false;
             $realPath = $this->findImport($url);
         } else {
-            $import = new stdClass;
+            $import = new \stdClass;
             $import->media = array();
             foreach ($str[2] as $i=>$op) {
                 if($op[0] == 'keyword') {
@@ -2040,7 +2040,7 @@ class Lessc
             $parser->count = 0;
             $parser->buffer = (string) $strValue;
             if (!$parser->propertyValue($value)) {
-                throw new Exception("failed to parse passed in variable $name: $strValue");
+                throw new \Exception("failed to parse passed in variable $name: $strValue");
             }
 
             $this->set($name, $value);
@@ -2090,7 +2090,7 @@ class Lessc
     public function compileFile($fname, $outFname = null)
     {
         if (!is_readable($fname)) {
-            throw new Exception('load error: failed to find '.$fname);
+            throw new \Exception('load error: failed to find '.$fname);
         }
 
         $pi = pathinfo($fname);
@@ -2152,15 +2152,15 @@ class Lessc
 
         if (is_string($in)) {
             $root = $in;
-        } elseif (is_array($in) and isset($in['root'])) {
-            if ($force or ! isset($in['files'])) {
+        } elseif (is_array($in) && isset($in['root'])) {
+            if ($force || !isset($in['files'])) {
                 // If we are forcing a recompile or if for some reason the
                 // structure does not contain any file information we should
                 // specify the root to trigger a rebuild.
                 $root = $in['root'];
-            } elseif (isset($in['files']) and is_array($in['files'])) {
+            } elseif (isset($in['files']) && is_array($in['files'])) {
                 foreach ($in['files'] as $fname => $ftime) {
-                    if (!file_exists($fname) or filemtime($fname) > $ftime) {
+                    if (!file_exists($fname) || filemtime($fname) > $ftime) {
                         // One of the files we knew about previously has changed
                         // so we should look at our incoming root again.
                         $root = $in['root'];

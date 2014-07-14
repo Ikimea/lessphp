@@ -2,6 +2,8 @@
 
 namespace Lessphp;
 
+use Lessphp\Parser\TagParser;
+
 class NodeCounter
 {
     public $count = 0;
@@ -95,7 +97,7 @@ class NodeCounter
     {
         $current = $this;
         for ($i = 0; $i < count($path); $i++) {
-            $t = tagparse::compileTag($path[$i]);
+            $t = TagParser::compileTag($path[$i]);
             $current = $current->getNode($t);
         }
 
@@ -106,7 +108,7 @@ class NodeCounter
     {
         $node = $this->findNode($path);
         if (!is_null($node->the_block)) {
-            throw new exception("can this happen?");
+            throw new \Exception("can this happen?");
         }
 
         unset($block['__tags']);

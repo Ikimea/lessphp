@@ -7,7 +7,7 @@ namespace Lessphp\Parser;
 
 use Lessphp\Lessc;
 
-class lesscParser
+class LesscParser
 {
     protected static $nextBlockId = 0; // used to uniquely identify blocks
 
