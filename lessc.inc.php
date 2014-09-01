@@ -69,16 +69,12 @@ class lessc {
 	protected function findImport($url) {
 		foreach ((array)$this->importDir as $dir) {
 			$full = $dir.(substr($dir, -1) != '/' ? '/' : '').$url;
-			if ($this->fileExists($file = $full.'.less') || $this->fileExists($file = $full)) {
+			if (file_exists($file = $full.'.less') || file_exists($file = $full)) {
 				return $file;
 			}
 		}
 
 		return null;
-	}
-
-	protected function fileExists($name) {
-		return is_file($name);
 	}
 
 	static public function compressList($items, $delim) {
